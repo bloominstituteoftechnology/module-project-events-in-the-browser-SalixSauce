@@ -10,8 +10,9 @@ function moduleProject2() {
 
   // Setting up the footer content
   let footer = document.querySelector('footer')
+  // let header = document.querySelector('header')
   let currentYear = new Date().getFullYear()
-  footer.textContent = `© BLOOM INSTITUTE OF TECHNOLOGY ${currentYear}`
+  footer.textContent = `© S A L I X S A U C E ${currentYear}`
 
   let keys = { // To easily check `event.key` on keyboard events
     space: ' ',
@@ -20,6 +21,11 @@ function moduleProject2() {
     down: 'ArrowDown',
     left: 'ArrowLeft',
   }
+// console.log(keys)
+// console.log(footer)
+// console.log(currentYear)
+// console.log(header)
+
 
   // Helper function to grab all squares
   const getAllSquares = () => document.querySelectorAll('.square')
@@ -37,6 +43,13 @@ function moduleProject2() {
       row.appendChild(square)
       square.addEventListener('click', () => {
         // 👉 TASK 2 - Use a click handler to target a square 👈
+        if(!square.classList.contains('targeted')) {
+          // getAllSquares().forEach(sq => {
+          //   sq.classList.remove('targeted')
+          // })
+          document.querySelector('.targeted').classList.remove(['targeted'])
+          square.classList.add('targeted')
+        }
       })
     }
   }
@@ -64,8 +77,45 @@ function moduleProject2() {
   })
 
   document.addEventListener('keydown', evt => {
+    // console.log(evt.key)
     // 👉 TASK 3 - Use the arrow keys to highlight a new square 👈
+    console.log(evt.key)
+    let isUp = evt.key === keys.up
+    let isDown = evt.key === keys.down
+    let isLeft = evt.key === keys.left
+    let isRight = evt.key === keys.right
 
+    let targeted = document.querySelector('.targeted')
+
+    if(isUp){
+      // console.log('you clicked up ')
+      if(targeted.parentElement.previousElementSibling) {
+        let idx = Array.from(targeted.parentElement.children).indexOf(targeted)
+         targeted.classList.remove('targeted')
+         targeted.parentElement.previousElementSibling.children[idx].classList.add('targeted')
+ 
+       } 
+    } else if(isDown) {
+      // console.log('you clicked down')
+      if(targeted.parentElement.nextElementSibling) {
+       let idx = Array.from(targeted.parentElement.children).indexOf(targeted)
+        targeted.classList.remove('targeted')
+        targeted.parentElement.nextElementSibling.children[idx].classList.add('targeted')
+
+      } 
+    } else if(isLeft){
+      // console.log('you clicked left')
+      if(targeted.previousElementSibling) {
+        targeted.classList.remove('targeted')
+        targeted.previousElementSibling.classList.add('targeted')
+      } 
+    } else if(isRight){
+      // console.log('you clicked right')
+      if(targeted.nextElementSibling) {
+        targeted.classList.remove('targeted')
+        targeted.nextElementSibling.classList.add('targeted')
+      } 
+    }
     // 👉 TASK 4 - Use the space bar to exterminate a mosquito 👈
 
     // 👉 TASK 5 - End the game 👈
